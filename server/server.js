@@ -118,16 +118,14 @@ app.post('/users/login', (req, res) => {
     }).catch((err) => {
         res.status(400).send(err);
     });
+});
 
-    // User.findOne({email:email}).then((user) => {
-    //     console.log(user);
-    //     if(!user) {
-    //         res.send(400).send();
-    //     }
-    //     res.send({user});
-    // }).catch((err) => {
-    //     res.status(400).send();
-    // });
+app.delete('/users/me/token',authenticate, (req,res) => {
+    req.user.removeToken(req.token).then(() => {
+        res.status(200).send();
+    }).catch(() => {
+        res.status(400).send();
+    });
 });
 
 app.listen(port, () => {
